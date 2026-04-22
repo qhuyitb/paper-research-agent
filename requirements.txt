@@ -1,0 +1,25 @@
+# Data
+datasets==2.19.0
+huggingface-hub==0.23.0
+
+# Embedding
+sentence-transformers==2.7.0
+
+# Vector DB
+qdrant-client==1.9.1
+
+# Agent
+langchain==0.2.0
+langchain-openai==0.1.7
+langgraph==0.0.55
+
+# LLM dùng openai
+openai==1.30.0
+
+# UI
+streamlit==1.35.0
+
+# Utils
+python-dotenv==1.0.1
+tiktoken==0.7.0
+tqdm==4.66.4

@@ -3,3 +3,4 @@ venv/
 __pycache__/
 *.pyc
 arxiv-metadata-oai-snapshot.json
+qdrant_storage/

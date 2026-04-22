@@ -24,7 +24,7 @@ def embed_chunks(input_path="data/processed/papers_processed.json",
 
     all_embeddings = np.vstack(all_embeddings)
     np.save(save_path, all_embeddings)
-    print(f"Đã embed {len(texts)} chunks → shape: {all_embeddings.shape}")
+    print(f"Đã embed {len(texts)} chunks thành shape: {all_embeddings.shape}")
     print(f"Lưu vào: {save_path}")
 
     return chunks, all_embeddings

@@ -77,5 +77,5 @@ if __name__ == "__main__":
 
     print("\nPreview 3 chunks đầu tiên:")
     for c in chunks[:3]:
-        print(f"\nchunk_id : {c['chunk_id']}")
-        print(f"text     : {c['text'][:150]}...")
+        print(f"\nchunk_id: {c['chunk_id']}")
+        print(f"text: {c['text'][:150]}...")

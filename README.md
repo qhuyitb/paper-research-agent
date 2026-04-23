@@ -45,24 +45,34 @@ Luồng xử lý tổng quát:
 
 ```text
 paper-research-agent/
-|- agent/
-|  |- graph.py          # LangGraph workflow (planner/executor/synthesizer)
-|  |- planner.py        # Tạo plan từ query
-|  |- tools.py          # Tool wrappers: rag_search, extract_keypoints, compare_papers
-|  |- state.py          # Typed state cho graph
-|- data/
-|  |- filter_data.py    # Lọc dữ liệu ArXiv theo category/time
-|  |- preprocess.py     # Semantic chunking cho papers
-|  |- raw/              # Dữ liệu gốc
-|  |- processed/        # Dữ liệu đã xử lý + embeddings
-|- rag/
-|  |- embedder.py       # Tạo embedding bằng SentenceTransformer
-|  |- vector_store.py   # Tạo collection + index vào Qdrant
-|  |- retriever.py      # Search từ Qdrant + format context
-|- ui/
-|  |- app.py            # Streamlit chat UI
-|- requirements.txt
+|- .env                     # Biến môi trường (OPENAI_API_KEY, QDRANT_*)
 |- README.md
+|- requirements.txt
+|- agent/
+|  |- graph.py              # LangGraph workflow (planner/executor/synthesizer)
+|  |- planner.py            # Tạo kế hoạch tool-use từ query
+|  |- tools.py              # Tool wrappers: rag_search, extract_keypoints, compare_papers
+|  |- state.py              # Typed state cho toàn bộ graph
+|- data/
+|  |- filter_data.py        # Lọc ArXiv metadata theo category + năm
+|  |- preprocess.py         # Semantic chunking cho title + abstract
+|  |- raw/
+|  |  |- arxiv-metadata-oai-snapshot.json
+|  |  |- papers.json
+|  |- processed/
+|  |  |- papers_processed.json
+|  |  |- embeddings.npy
+|- rag/
+|  |- embedder.py           # Encode chunks thành vector (all-MiniLM-L6-v2)
+|  |- vector_store.py       # Tạo collection và upsert points vào Qdrant
+|  |- retriever.py          # Semantic search + format context
+|- ui/
+|  |- app.py                # Giao diện chat Streamlit
+|- eval/
+|  |- evaluate.py           # Script đánh giá Retrieval / Plan / Answer
+|  |- eval_results.json     # Kết quả evaluation (sinh ra sau khi chạy)
+|- qdrant_storage/          # Dữ liệu local Qdrant (nếu chạy local persistent)
+|- venv/                    # Python virtual environment
 ```
 
 ## 4. Yêu cầu hệ thống
@@ -159,13 +169,38 @@ python agent/planner.py     # test plan creation
 python agent/graph.py       # test run_agent với sample queries
 ```
 
-## 9. Một số query gợi ý
+## 9. Evaluation
+
+Project hiện có script đánh giá tại `eval/evaluate.py`.
+
+Đánh giá theo 3 tầng:
+
+- Retrieval: đo độ phủ keyword trên top-k kết quả truy xuất.
+- Plan: kiểm tra plan có dùng đúng tools kỳ vọng và có bước `synthesize`.
+- Answer: chấm keyword coverage + số citation + LLM judge score (1-5).
+
+Chạy evaluation:
+
+```bash
+python eval/evaluate.py
+```
+
+Kết quả được ghi vào:
+
+- `eval/eval_results.json`
+
+Lưu ý khi chạy:
+
+- Cần có `OPENAI_API_KEY` để chấm phần answer bằng LLM judge.
+- Qdrant phải sẵn dữ liệu (đã index) để retrieval evaluation có ý nghĩa.
+
+## 10. Một số query gợi ý
 
 - `What is attention mechanism?`
 - `Compare Transformer and RNN`
 - `What are limitations of BERT?`
 
-## 10. Troubleshooting
+## 11. Troubleshooting
 
 ### Lỗi kết nối Qdrant
 
@@ -182,14 +217,14 @@ python agent/graph.py       # test run_agent với sample queries
 - `SentenceTransformer` sẽ tải model `all-MiniLM-L6-v2` ở lần đầu.
 - Quá trình embedding/index có thể tốn thời gian tùy số lượng papers.
 
-## 11. Ghi chú kỹ thuật
+## 12. Ghi chú kỹ thuật
 
 - Embedding model: `all-MiniLM-L6-v2` (384 dimensions).
 - Qdrant distance metric: `COSINE`.
 - Agent orchestrator: `LangGraph` (`planner -> executor loop -> synthesizer`).
 - LLM model trong code hiện tại: `gpt-4o-mini`.
 
-## 12. Hướng phát triển tiếp
+## 13. Hướng phát triển tiếp
 
 - Thêm bộ lọc theo năm/category trên UI.
 - Thêm reranking để nâng chất lượng retrieval.

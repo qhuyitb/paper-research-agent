@@ -8,6 +8,8 @@
 ![Sentence Transformers](https://img.shields.io/badge/SentenceTransformers-all--MiniLM--L6--v2-0A66C2)
 
 Agent hỗ trợ tra cứu và tổng hợp kiến thức từ các AI/ML papers (nguồn ArXiv) bằng RAG + LangGraph + OpenAI, có giao diện chat Streamlit.
+## 🚀 Live Demo
+👉 [Paper Research Agent](https://qhuyitb-paper-research-agent-uiapp-sqqsy8.streamlit.app/)
 
 ## Nguồn dữ liệu đầy đủ
 

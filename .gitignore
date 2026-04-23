@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 arxiv-metadata-oai-snapshot.json
 qdrant_storage/
+data/processed/embeddings.npy
+data/processed/papers_processed.json

@@ -36,7 +36,7 @@ def search(query: str, top_k : int = 5) -> list:
 
     return formatted
 
-def format_context(result: list[dict]) -> str:
+def format_context(results: list[dict]) -> str:
     """
     Gộp kết quả search thành 1 đoạn context
     để đưa vào prompt cho LLM

@@ -6,7 +6,7 @@ TARGET_CATEGORIES = {"cs.AI", "cs.LG", "cs.CL"}
 
 def filter_arxiv_papers(input_path="data/raw/arxiv-metadata-oai-snapshot.json", 
                          save_path="data/raw/papers.json", 
-                         max_papers=5000):
+                         max_papers=20000):
     papers = []
     with open(input_path, "r", encoding="utf-8") as f:
         for line in tqdm(f, desc="Scanning papers"):
@@ -20,6 +20,9 @@ def filter_arxiv_papers(input_path="data/raw/arxiv-metadata-oai-snapshot.json",
                 continue  
             # Filter theo category
             categories = set(paper.get("categories", "").split())
+            year = paper.get("update_date", "")[:4]
+            if year < "2018":  
+                continue
             if categories & TARGET_CATEGORIES:
                 papers.append({
                     "id": paper.get("id", ""),

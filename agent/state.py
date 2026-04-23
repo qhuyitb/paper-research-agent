@@ -9,7 +9,7 @@ class AgentState(TypedDict):
     messages: Annotated[list, operator.add]
     
     # Plan do Planner tạo ra
-    plan: list[dict]
+    plan: list[str]
      
     # Bước hiện tại trong plan
     current_step: int  
@@ -21,8 +21,6 @@ class AgentState(TypedDict):
     selected_papers: list[dict]
     
     # Kết quả trung gian của từng step
-    # Ví dụ: step 1 search xong lưu vào đây
-    #         step 2 dùng kết quả step 1
     intermediate_results: Annotated[list, operator.add]
 
     # Câu trả lời cuối cùng
@@ -31,3 +29,4 @@ class AgentState(TypedDict):
     # Citations để hiện trên UI
     citations: list[dict]
     
+    chat_history: list[dict]

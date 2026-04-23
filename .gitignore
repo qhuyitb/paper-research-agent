@@ -6,3 +6,5 @@ arxiv-metadata-oai-snapshot.json
 qdrant_storage/
 data/processed/embeddings.npy
 data/processed/papers_processed.json
+data/raw/arxiv-metadata-oai-snapshot.json
+data/raw/papers.json

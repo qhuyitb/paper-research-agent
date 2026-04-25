@@ -224,9 +224,4 @@ Lưu ý khi chạy:
 - Agent orchestrator: `LangGraph` (`planner -> executor loop -> synthesizer`).
 - LLM model trong code hiện tại: `gpt-4o-mini`.
 
-## 13. Hướng phát triển tiếp
 
-- Thêm bộ lọc theo năm/category trên UI.
-- Thêm reranking để nâng chất lượng retrieval.
-- Cache kết quả query phổ biến.
-- Viết test tự động cho planner và tools.
